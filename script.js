@@ -26,15 +26,20 @@ document.addEventListener('DOMContentLoaded', function () {
             } else if (value === 'C') {
                 expressionString = '';
                 isResultDisplayed = false;
-            } else { // For numbers, operators, parentheses, and xʸ
+            } else if (value === '⌫') {
+                if (!isResultDisplayed && expressionString !== 'Error' && expressionString.length > 0) {
+                    expressionString = expressionString.slice(0, -1);
+                }
+            } else { // For numbers, operators (including %), parentheses, and xʸ
                 let actualValueToAppend = value;
                 if (value === 'xʸ') {
                     actualValueToAppend = '**';
                 }
+                // No special change needed for '%' for actualValueToAppend, as it's already '%'
 
                 if (isResultDisplayed) {
-                    // Check if it's an operator type, including '**'
-                    if (['+', '-', '*', '/', '**'].includes(actualValueToAppend)) {
+                    // Check if it's an operator type, including '%' and '**'
+                    if (['+', '-', '*', '/', '**', '%'].includes(actualValueToAppend)) {
                         // If previous was 'Error' and now an operator, clear 'Error' before proceeding
                         if (expressionString === 'Error') {
                             expressionString = '';
@@ -56,16 +61,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 // This is a simplified version of the previous attempts to prevent multiple operators.
                 // Allows a leading minus. Prevents other operators if string is empty or last char is operator.
                 // Allows '**' if last char is not an operator.
-                if (['+', '*', '/', '**'].includes(actualValueToAppend)) { // Operators that cannot be leading (except if part of a number like -5)
-                    if (expressionString === '' || ['+', '-', '*', '/', '('].includes(expressionString.slice(-1))) {
+                if (['+', '*', '/', '**', '%'].includes(actualValueToAppend)) { // Operators that cannot be leading (except if part of a number like -5)
+                    if (expressionString === '' || ['+', '-', '*', '/', '%', '('].includes(expressionString.slice(-1))) {
                         // Don't append if expression is empty (unless it's '-') or last char is an operator or open parenthesis.
                         // This prevents "++", "*+", "(+", etc. and leading non-minus operators.
                         // Allows appending after an open parenthesis e.g. (- or (*
                         if (actualValueToAppend === '-' && expressionString.endsWith('(')) {
                              expressionString += actualValueToAppend; // Allow expressions like (-5)
-                        } else if (expressionString.endsWith('(') && ['+','*','/','**'].includes(actualValueToAppend)) {
-                            // do nothing, e.g. prevent (* or (/
-                        } else if (expressionString !== '' && !['+', '-', '*', '/','('].includes(expressionString.slice(-1))) {
+                        } else if (expressionString.endsWith('(') && ['+','*','/','**','%'].includes(actualValueToAppend)) {
+                            // do nothing, e.g. prevent (* or (/ or (%
+                        } else if (expressionString !== '' && !['+', '-', '*', '/', '%','('].includes(expressionString.slice(-1))) {
                              // If not empty and last char is not an operator or '(', allow.
                              expressionString += actualValueToAppend;
                         }
