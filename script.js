@@ -39,33 +39,38 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (expressionString === 'Error') {
                             expressionString = ''; // Start fresh if previous was error
                         }
+                        // If the current expression is "Error", and an operator is clicked,
+                        // we should not append to "Error". Handled by the general 'Error' check below.
                         isResultDisplayed = false; // Continue with the current result as first operand
-                    } else {
-                        // User starts typing a new number after a result, so start fresh
+                    } else { // Number or Parenthesis
+                        // User starts typing a new number or parenthesis after a result, so start fresh
                         expressionString = '';
                         isResultDisplayed = false;
                     }
-                } else if (expressionString === 'Error') {
-                    // If current expression is "Error" and it's not an operator that might clear it (handled above)
-                    // or a new number input, clear it.
+                }
+
+                // If the expression was 'Error', any valid input (number, operator, parenthesis)
+                // should clear it first before appending the new value.
+                if (expressionString === 'Error') {
                     expressionString = '';
                 }
 
                 // Prevent multiple operators in a row e.g. "5++" or "5+*"
-                // Or leading operators
+                // Or leading operators. This logic might need review for parentheses.
+                // For now, parentheses are treated like numbers for this check.
                 if (['+', '-', '*', '/'].includes(value)) {
                     if (expressionString === '' || ['+', '-', '*', '/'].includes(expressionString.slice(-1))) {
                         // Do not add operator if expression is empty or last char is already an operator
                         // Allow for negative numbers at start, e.g. "-5"
                         if (value !== '-' || expressionString !== '') {
-                             // Don't append if it's not a valid start or sequence
-                        } else {
+                             // Don't append if it's not a valid start or sequence for an operator
+                        } else { // Allow leading minus
                            expressionString += value;
                         }
-                    } else {
+                    } else { // Last char is not an operator, or expression is not empty.
                         expressionString += value;
                     }
-                } else { // Numbers or decimal point
+                } else { // Numbers, decimal point, or parentheses
                     expressionString += value;
                 }
             }

@@ -56,3 +56,7 @@ body {
 .equals:hover {
     background-color: #e08500;
 }
+
+#btn-zero {
+    grid-column: span 2;
+}
