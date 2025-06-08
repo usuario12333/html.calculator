@@ -10,33 +10,38 @@
             <input type="text" id="result" disabled>
         </div>
         <div class="buttons">
-            <!-- Row 1 -->
+            <!-- Row 1: ( ) x⁰ C -->
             <button>(</button>
             <button>)</button>
+            <button>x⁰</button>  <!-- Exponent button, lowercase x -->
             <button>C</button>
-            <button>xʸ</button>
-            <button>%</button>
-            <!-- Row 2 -->
+
+            <!-- Row 2: 7 8 9 / -->
             <button>7</button>
             <button>8</button>
             <button>9</button>
             <button>/</button>
-            <button>*</button>
-            <!-- Row 3 -->
+
+            <!-- Row 3: 4 5 6 * -->
             <button>4</button>
             <button>5</button>
             <button>6</button>
-            <button>-</button>
-            <button>.</button>
-            <!-- Row 4 -->
+            <button>*</button>
+
+            <!-- Row 4: 1 2 3 - -->
             <button>1</button>
             <button>2</button>
             <button>3</button>
-            <button id="btn-equals" class="equals">=</button>
-            <!-- Row 5 -->
-            <button id="btn-zero">0</button>
+            <button>-</button>
+
+            <!-- Row 5: 0 . < + -->
+            <button id="btn-zero">0</button> <!-- btn-zero ID kept for consistency, no span needed by default -->
+            <button>.</button>
+            <button>&lt;</button>  <!-- Backspace button, displays as '<' -->
             <button>+</button>
-            <button>⌫</button>
+
+            <!-- Row 6: = (will span 4 columns via CSS) -->
+            <button id="btn-equals" class="equals">=</button>
         </div>
     </div>
     <script src="script.js"></script>

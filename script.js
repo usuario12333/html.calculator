@@ -26,13 +26,13 @@ document.addEventListener('DOMContentLoaded', function () {
             } else if (value === 'C') {
                 expressionString = '';
                 isResultDisplayed = false;
-            } else if (value === '⌫') {
+            } else if (value === '<') { // Updated from ⌫
                 if (!isResultDisplayed && expressionString !== 'Error' && expressionString.length > 0) {
                     expressionString = expressionString.slice(0, -1);
                 }
-            } else { // For numbers, operators (including %), parentheses, and xʸ
+            } else { // For numbers, operators (including %), parentheses, and x⁰
                 let actualValueToAppend = value;
-                if (value === 'xʸ') {
+                if (value === 'x⁰') { // Updated from X⁰
                     actualValueToAppend = '**';
                 }
                 // No special change needed for '%' for actualValueToAppend, as it's already '%'
