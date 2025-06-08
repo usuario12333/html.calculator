@@ -58,5 +58,5 @@ body {
 }
 
 #btn-zero {
-    grid-column: span 2;
+    /* grid-column: span 2; /* No longer spans 2 columns */
 }
